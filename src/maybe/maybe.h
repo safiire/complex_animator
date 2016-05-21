@@ -1,3 +1,4 @@
+#pragma once
 #include <functional>
 
 template <typename T>
@@ -37,13 +38,19 @@ class Maybe {
     return _ptr != nullptr;
   }
 
-  Otherwise& if_exists(std::function<void (T&)> f) {
+  std::unique_ptr<Otherwise> if_exists(std::function<void (T&)> f) {
     Otherwise branch(true);
     if(*this) {
       f(*_ptr);
-      branch.call = false;
+      return std::make_unique<Otherwise>(false);
     }
-    return branch;
+    return std::make_unique<Otherwise>(true);
   }
 
 };
+
+
+template <typename T>
+Maybe<T> Nothing() {
+  return Maybe<T> {};
+}

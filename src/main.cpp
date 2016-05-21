@@ -5,8 +5,16 @@
 int main(){
 
   NetPPM image = NetPPM(1024, 1024);
-  Maybe<int> n = 123;
-  Maybe<int> m(n);
+
+  for(int y = 0; y < 1024; y++){
+    for(int x = 0; x < 1024; x++){
+      uint8_t r = (x ^ y) % 256;
+      uint8_t g = (x & y) % 256;
+      uint8_t b = (x | y) % 256;
+      image.set_pixel(x, y, ivec3(r, g, b));
+    }
+  }
+  image.write_file("output.ppm");
 
   Maybe<NetPPM> maybe_image = std::move(image);
   Maybe<NetPPM> copy_image(image);
@@ -22,7 +30,7 @@ int main(){
   nothing.if_exists([] (int a) {
     printf("This won't happen %d\n", a);
 
-  }).otherwise([] (void) {
+  })->otherwise([] (void) {
     printf("Otherwise works!\n");
 
   });

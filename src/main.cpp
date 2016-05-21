@@ -1,4 +1,5 @@
 #include <netppm/netppm.h>
+#include <viewport/viewport.h>
 #include <maybe/maybe.h>
 #include <stdio.h>
 

@@ -1,6 +1,8 @@
 #pragma once
 #include <functional>
 
+using namespace std;
+
 template <typename T>
 class Maybe {
   private:
@@ -12,10 +14,10 @@ class Maybe {
   Placeholder _memory;
 
   struct Otherwise {
-    bool call;
-    Otherwise(bool call) : call(call) {}
-    void otherwise(std::function< void (void)> f){
-      if(call) f();
+    bool _call;
+    Otherwise(bool call) : _call(call) {}
+    void otherwise(function< void (void)> f){
+      if(_call) f();
     }
   };
 
@@ -23,13 +25,13 @@ class Maybe {
   Maybe() : _ptr(nullptr) {}
 
   Maybe(T &&other) : _ptr(nullptr) {
-    std::memcpy(&_memory, &other, sizeof(T));
+    memcpy(&_memory, &other, sizeof(T));
     _ptr = reinterpret_cast<T*>(&_memory);
     printf("Maybe move constructor\n");
   }
 
   Maybe(const T& other) : _ptr(nullptr) {
-    std::memcpy(&_memory, &other, sizeof(T));
+    memcpy(&_memory, &other, sizeof(T));
     _ptr = reinterpret_cast<T*>(&_memory);
     printf("Maybe copy constructor\n");
   }
@@ -38,15 +40,14 @@ class Maybe {
     return _ptr != nullptr;
   }
 
-  std::unique_ptr<Otherwise> if_exists(std::function<void (T&)> f) {
+  unique_ptr<Otherwise> if_exists(function<void (T&)> f) {
     Otherwise branch(true);
     if(*this) {
       f(*_ptr);
-      return std::make_unique<Otherwise>(false);
+      return make_unique<Otherwise>(false);
     }
-    return std::make_unique<Otherwise>(true);
+    return make_unique<Otherwise>(true);
   }
-
 };
 
 

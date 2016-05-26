@@ -5,20 +5,17 @@ CFLAGS=-std=c++1y -stdlib=libc++ -O3 -Wall -Wextra
 
 build: bin/graph
 
-bin/graph: obj/main.o obj/netppm.o obj/maybe.o obj/viewport.o
+bin/graph: obj/main.o obj/netppm.o obj/color.o
 	${CC} obj/*.o -o bin/graph
 
 obj/main.o: src/main.cpp
 	${CC} ${CFLAGS} ${INCLUDE} -c src/main.cpp -o obj/main.o
 
-obj/maybe.o: src/maybe/maybe.cpp
-	${CC} ${CFLAGS} ${INCLUDE} -c src/maybe/maybe.cpp -o obj/maybe.o
-
 obj/netppm.o: src/netppm/netppm.cpp
 	${CC} ${CFLAGS} ${INCLUDE} -c src/netppm/netppm.cpp -o obj/netppm.o
 
-obj/viewport.o: src/viewport/viewport.cpp
-	${CC} ${CFLAGS} ${INCLUDE} -c src/viewport/viewport.cpp -o obj/viewport.o
+obj/color.o: src/color/color.cpp
+	${CC} ${CFLAGS} ${INCLUDE} -c src/color/color.cpp -o obj/color.o
 
 clean:
 	rm -f bin/graph

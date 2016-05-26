@@ -10,7 +10,18 @@ NetPPM::NetPPM(const NetPPM& other) :
 NetPPM::NetPPM(NetPPM&& other) {
   _size = other._size;
   _data.swap(other._data);
-  _size = ivec2(0, 0);
+  _size = ivec2 {0, 0};
+}
+
+
+void NetPPM::map_each_pixel(function<ivec3 (const vec2 &pixel_coord)> f){
+  for(int y = 0; y < _size.y; y++){
+    for(int x = 0; x < _size.x; x++){
+
+      vec2 coord {x, y};
+      set_pixel(coord, f(coord));
+    }
+  }
 }
 
 

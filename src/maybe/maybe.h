@@ -27,13 +27,13 @@ class Maybe {
   Maybe(T &&other) : _ptr(nullptr) {
     memcpy(&_memory, &other, sizeof(T));
     _ptr = reinterpret_cast<T*>(&_memory);
-    printf("Maybe move constructor\n");
+    //printf("Maybe move constructor\n");
   }
 
   Maybe(const T& other) : _ptr(nullptr) {
     memcpy(&_memory, &other, sizeof(T));
     _ptr = reinterpret_cast<T*>(&_memory);
-    printf("Maybe copy constructor\n");
+    //printf("Maybe copy constructor\n");
   }
 
   explicit operator bool() const {

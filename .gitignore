@@ -1,2 +1,6 @@
 *.swp
 *.ppm
+*.o
+obj/*
+out/*
+bin/*

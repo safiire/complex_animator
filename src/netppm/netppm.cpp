@@ -10,16 +10,15 @@ NetPPM::NetPPM(const NetPPM& other) :
 NetPPM::NetPPM(NetPPM&& other) {
   _size = other._size;
   _data.swap(other._data);
-  _size = ivec2 {0, 0};
+  other._size = ivec2 {0, 0};
 }
 
 
-void NetPPM::map_each_pixel(function<ivec3 (const vec2 &pixel_coord)> f){
+void NetPPM::map_each_pixel(function<ivec3 (const vec2 &&pixel_coord)> f){
   for(int y = 0; y < _size.y; y++){
     for(int x = 0; x < _size.x; x++){
 
-      vec2 coord {x, y};
-      set_pixel(coord, f(coord));
+      set_pixel(x, y, f(vec2 {x, y}));
     }
   }
 }
@@ -63,7 +62,7 @@ Maybe<ivec3> NetPPM::get_pixel(const ivec2 &coord) const {
 }
 
 
-bool NetPPM::set_pixel(uint32_t x, uint32_t y, const ivec3 pixel) {
+bool NetPPM::set_pixel(uint32_t x, uint32_t y, const ivec3 &pixel) {
   bool success = false;
   get_offset(x, y).if_exists([&] (uint32_t offset) {
     success = true;

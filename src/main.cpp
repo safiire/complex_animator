@@ -14,7 +14,7 @@ int main(){
   NetPPM image = NetPPM(size);
 
   int fps = 30;
-  int total_time = 5;
+  int total_time = 30;
   int total_frames = total_time * fps;
 
   double t = 0.0;
@@ -26,10 +26,14 @@ int main(){
     image.map_each_pixel([&view_port, &t] (const vec2 &pixel_coord) {
 
       complex<double> z = view_port.pixel_to_complex(pixel_coord);
+
       //z = z - (1.0 * t) - std::pow(z, -1 * t);
-      z = sin(z * t) * cos(z * t) * pow(z, -1);
+      //z = sin(z * t) * cos(z * t) * pow(z, -1);
+      //z = pow(z, 5 * sin(t)) + 1.0;
+      z = sin(3.141592653589793 * z * t) / (3.141592653589793 * z * t);
+
       auto hsv = complex_to_hsv(z);
-      return glm::rgbColor(hsv) * vec3(255, 255, 255);
+      return glm::rgbColor(hsv) * vec3(0, 255, 255);
     });
 
     sprintf(filename, "out/output_%05d.ppm", frame);

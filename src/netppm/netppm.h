@@ -23,7 +23,7 @@ class NetPPM {
   NetPPM(const NetPPM& other);
   NetPPM(NetPPM&& other);
 
-  void map_each_pixel(function<ivec3 (const vec2 &pixel_coord)> f);
+  void map_each_pixel(function<ivec3 (const vec2 &&pixel_coord)> f);
 
   uint32_t buffer_size() const;
   Maybe<uint32_t> get_offset(uint32_t x, uint32_t y) const;
@@ -32,7 +32,7 @@ class NetPPM {
   Maybe<ivec3> get_pixel(uint32_t x, uint32_t y) const;
   Maybe<ivec3> get_pixel(const ivec2 &coord) const;
 
-  bool set_pixel(uint32_t x, uint32_t y, const ivec3 pixel);
+  bool set_pixel(uint32_t x, uint32_t y, const ivec3 &pixel);
   bool set_pixel(const ivec2 &coord, const ivec3 &pixel);
   bool write_file(const char *filename) const;
 };

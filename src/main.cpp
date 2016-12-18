@@ -30,7 +30,8 @@ int main(){
       //z = z - (1.0 * t) - std::pow(z, -1 * t);
       //z = sin(z * t) * cos(z * t) * pow(z, -1);
       //z = pow(z, 5 * sin(t)) + 1.0;
-      z = sin(3.141592653589793 * z * t) / (3.141592653589793 * z * t);
+      //z = sin(3.141592653589793 * z * t) / (3.141592653589793 * z * t);
+      z = 1.0 / (pow(z, t * 0.01) + 1.0);
 
       auto hsv = complex_to_hsv(z);
       return glm::rgbColor(hsv) * vec3(0, 255, 255);

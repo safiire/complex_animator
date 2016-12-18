@@ -5,6 +5,9 @@ CFLAGS=-std=c++1y -stdlib=libc++ -O3 -Wall -Wextra
 
 build: bin/graph
 
+movie: bin/graph
+	ffmpeg -i out/output_%05d.ppm -c:v libx264 out/out.mp4
+
 bin/graph: obj/main.o obj/netppm.o obj/color.o
 	${CC} obj/*.o -o bin/graph
 
